@@ -7,11 +7,11 @@ pipeline {
     }
 
     environment {
-        SPRING_PROFILES_ACTIVE = 'dev'
+      
         
-        JAVA_HOME = 'C:\\Program Files\\Java\\jdk-17'
-        M2_HOME = 'C:\\apache-maven-3.8.1'
-        PATH = "${env.JAVA_HOME}\\bin;${env.M2_HOME}\\bin;${env.PATH}"
+        JAVA_HOME = 'C:\Users\reddy\Downloads\OpenJDK17U-jdk_x64_windows_hotspot_17.0.16_8.msi'
+        M2_HOME = 'C:\Users\reddy\Downloads\apache-maven-3.9.9-bin (1)\apache-maven-3.9.9\bin\mvn'
+        PATH = "${env.JAVA_HOME}\\bin;${env.MAVEN_HOME}\\bin;${env.PATH}"
     
     }
 
