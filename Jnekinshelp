@@ -24,7 +24,7 @@ pipeline {
 
         stage('Test') {
             steps {
-                bat 'mvn test -Dtest='!PostgresIntegrationTests''
+                bat 'mvn test -Dtest='!PostgresIntegrationTests'
             }
         }
 
