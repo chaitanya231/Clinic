@@ -18,43 +18,43 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'mvn clean package -DskipTests'
+                bat 'mvn clean package -DskipTests'
             }
         }
 
         stage('Test') {
             steps {
-                sh 'mvn test'
+                bat 'mvn test'
             }
         }
 
         stage('Docker Build') {
             steps {
-                sh 'docker build -t spring-petclinic:latest .'
+                bat 'docker build -t spring-petclinic:latest .'
             }
         }
 
         stage('Push to Docker Hub / Registry') {
             steps {
                 withCredentials([string(credentialsId: 'dockerhub-token', variable: 'DOCKER_TOKEN')]) {
-                    sh 'docker login -u your-username -p $DOCKER_TOKEN'
-                    sh 'docker tag spring-petclinic your-username/spring-petclinic:latest'
-                    sh 'docker push your-username/spring-petclinic:latest'
+                    bat 'docker login -u your-username -p $DOCKER_TOKEN'
+                    bat 'docker tag spring-petclinic your-username/spring-petclinic:latest'
+                    bat 'docker push your-username/spring-petclinic:latest'
                 }
             }
         }
 
         stage('Deploy to OpenShift') {
             steps {
-                sh 'oc login --token=$OPENSHIFT_TOKEN --server=$OPENSHIFT_SERVER'
-                sh 'oc project your-project'
-                sh 'oc rollout restart deployment/spring-petclinic'
+                bat 'oc login --token=$OPENSHIFT_TOKEN --server=$OPENSHIFT_SERVER'
+                bat 'oc project your-project'
+                bat 'oc rollout restart deployment/spring-petclinic'
             }
         }
 
         stage('Send Logs to Splunk') {
             steps {
-                sh 'curl -k https://splunk-url:8088/services/collector -H "Authorization: Splunk $SPLUNK_TOKEN" -d @logs.json'
+                bat 'curl -k https://splunk-url:8088/services/collector -H "Authorization: Splunk $SPLUNK_TOKEN" -d @logs.json'
             }
         }
     }
