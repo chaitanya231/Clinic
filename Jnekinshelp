@@ -40,16 +40,19 @@ pipeline {
                 bat 'docker build -t spring-petclinic:latest .'
             }
         }
+        stage('push docker imag'){
+        steps{
 
-        stage('Push to Docker Hub / Registry') {
-            steps {
-                withCredentials([string(credentialsId: 'dockerhub-token', variable: 'DOCKER_TOKEN')]) {
-                    bat 'docker login -u chaitanya00231 -p $DOCKER_TOKEN'
-                    bat 'docker tag spring-petclinic chaitanya00231/spring-petclinic:latest'
-                    bat 'docker push chaitanya00231/spring-petclinic:latest'
-                }
-            }
-        }
+        withCredentials([string(credentialsId: 'dockerhub-token', variable: 'DOCKER_TOKEN')]) {
+    bat """
+        echo %DOCKER_TOKEN% | docker login -u chaitanya00231 --password-stdin
+    """
+    bat 'docker tag spring-petclinic chaitanya00231/spring-petclinic:latest'
+    bat 'docker push chaitanya00231/spring-petclinic:latest'
+}
+}
+}
+        
 
         stage('Deploy to OpenShift') {
             steps {
