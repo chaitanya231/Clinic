@@ -65,10 +65,7 @@ pipeline {
             }
         }
 
-        stage('Send Logs to Splunk') {
-            steps {
-                bat 'curl -k https://splunk-url:8088/services/collector -H "Authorization: Splunk $SPLUNK_TOKEN" -d @logs.json'
-            }
+        
         }
     }
 }
