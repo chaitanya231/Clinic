@@ -28,6 +28,12 @@ pipeline {
                 
             }
         }
+        stage('Verify target contents') {
+    steps {
+        bat 'dir target'
+    }
+}
+        
 
         stage('Docker Build') {
             steps {
