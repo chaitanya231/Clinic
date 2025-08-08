@@ -54,15 +54,19 @@ pipeline {
 }
         
 
-        stage('Deploy to OpenShift') {
+ stage('Deploy to OpenShift') {
     steps {
-        
-            bat 'oc login --token=sha256~R7zNx3d7BIdQMAnDYpewIDPery-fu-Qiq9Kcn5hekZU --server=https://api.rm2.thpm.p1.openshiftapps.com:6443'
-            bat 'oc project chaitanya231-dev'
-            bat 'oc rollout restart deployment/spring-petclinic'
+        withCredentials([string(credentialsId: 'sha256~KpK8YQOYjqZmSR9CdyvQvbyor-0_8eeU1jHBOlWLKRk', variable: 'OC_TOKEN')]) {
+            bat '''
+                docker run --rm -v %CD%:/workspace -w /workspace quay.io/openshift/origin-cli:latest \
+                oc login --token=%OC_TOKEN% --server=https://api.rm2.thpm.p1.openshiftapps.com:6443
+                oc project chaitanya231-dev
+                oc rollout restart deployment/spring-petclinic
+            '''
         }
     }
-
+}
+ 
         
 
         
