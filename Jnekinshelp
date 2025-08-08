@@ -24,7 +24,7 @@ pipeline {
 
         stage('Test') {
             steps {
-                bat 'mvn clean test -Dtest=*Test -Dsurefire.excludedTests=PostgresIntegrationTests'
+                bat 'mvn test -Dtest=*Test -Dsurefire.excludedTests=PostgresIntegrationTests'
                 
             }
         }
