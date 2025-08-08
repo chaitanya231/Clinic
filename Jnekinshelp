@@ -55,6 +55,9 @@ pipeline {
         
 
         stage('Deploy to OpenShift') {
+         environment {
+        OPENSHIFT_TOKEN = credentials('openshift-token-id')     
+        OPENSHIFT_SERVER = 'https://api.rm2.thpm.p1.openshiftapps.com:6443'
             steps {
                 bat 'oc login --token=$OPENSHIFT_TOKEN --server=$OPENSHIFT_SERVER'
                 bat 'oc project your-project'
